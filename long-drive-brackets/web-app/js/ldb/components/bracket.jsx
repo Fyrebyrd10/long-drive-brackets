@@ -44,6 +44,7 @@ var Bracket = React.createClass({
                     <li className="tab col s3"><a id="tab1" className="active" href="#round1">Round 1</a></li>
                     <li className="tab col s3"><a href="#round2">Round 2</a></li>
                     <li className="tab col s3"><a href="#round3">Round 3</a></li>
+                    <li className="tab col s3"><a href="#finals">Finals</a></li>
                   </ul>
                   <div className="section no-pad-bot" id="index-banner">
                     <div className="container">
