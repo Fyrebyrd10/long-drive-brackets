@@ -112,7 +112,7 @@ var Bracket = React.createClass({displayName: "Bracket",
             React.createElement("div", null, 
                 React.createElement(NavBar, null), 
                   React.createElement("ul", {className: "tabs"}, 
-                    React.createElement("li", {className: "tab col s3"}, React.createElement("a", {className: "active", href: "#round1"}, "Round 1")), 
+                    React.createElement("li", {className: "tab col s3"}, React.createElement("a", {id: "tab1", className: "active", href: "#round1"}, "Round 1")), 
                     React.createElement("li", {className: "tab col s3"}, React.createElement("a", {href: "#round2"}, "Round 2")), 
                     React.createElement("li", {className: "tab col s3"}, React.createElement("a", {href: "#round3"}, "Round 3"))
                   ), 
