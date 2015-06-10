@@ -46,6 +46,8 @@ var BracketActions = {
                     action: Constants.LOAD_BRACKET_SUCCESS,
                     bracket: bracket,
                 });
+                setInitialDisplays();
+
 
             });
 

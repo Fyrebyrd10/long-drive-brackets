@@ -1,6 +1,4 @@
 var React = require('react');
-var Row = require('./row.jsx');
-var Column = require('./column.jsx');
 var GroupRow = require('./groupRow.jsx');
 
 var Group = React.createClass({

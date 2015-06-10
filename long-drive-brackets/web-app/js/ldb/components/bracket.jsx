@@ -31,16 +31,25 @@ var Bracket = React.createClass({
 
     render: function() {
       var bracket = this.state.bracket;
-      var round1 = null;
+      var rows = [];
       if(bracket) {
-
-        round1 = bracket.round1;
-
+        for(s in bracket.rounds) {
+          rows.push(<Round round={bracket.rounds[s]} />);
+        }
       }
         return (
             <div>
                 <NavBar/>
-                <Round round={round1}/>
+                  <ul className="tabs">
+                    <li className="tab col s3"><a className="active" href="#round1">Round 1</a></li>
+                    <li className="tab col s3"><a href="#round2">Round 2</a></li>
+                    <li className="tab col s3"><a href="#round3">Round 3</a></li>
+                  </ul>
+                  <div className="section no-pad-bot" id="index-banner">
+                    <div className="container">
+                {rows}
+              </div>
+            </div>
             </div>
         );
     }

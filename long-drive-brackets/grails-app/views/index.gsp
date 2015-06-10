@@ -16,5 +16,6 @@
 <script src="js/ldb/materialize.js"></script>
 <script src="js/ldb/init.js"></script>
 <script src="js/dist/long-drive-brackets.js" type="text/javascript"></script>
+<script src="js/application.js" type="text/javascript"></script>
 </body>
 </html>

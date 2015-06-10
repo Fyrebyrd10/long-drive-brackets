@@ -1,33 +1,27 @@
 var React = require('react');
 var Row = require('./row.jsx');
-var Column = require('./column.jsx');
 var Set = require('./set.jsx');
+var SetTotals = require('./setTotals.jsx');
 
 var Round = React.createClass({
     render: function() {
         var round = this.props.round;
-        var set1 = null;
-        var set2 = null;
-        var set3 = null;
-        var set4 = null;
-        var set5 = null;
-
-
-
+        var roundId = null;
         var rows = [];
         if(round) {
+          roundId = round.id;
           for(s in round.sets) {
-            rows.push(<Set set={round.sets[s]} setNumber={s}/>);
+            rows.push(<Set set={round.sets[s]} setNumber={parseInt(s) + 1}/>);
           }
+          rows.push(<SetTotals players={round.players}/>)
         }
         return (
-              <div className="section no-pad-bot" id="index-banner">
-                <div className="container">
+
+                  <div id={roundId}>
                   <Row>
                     {rows}
-
                   </Row>
-                </div>
+
               </div>
 
         );
