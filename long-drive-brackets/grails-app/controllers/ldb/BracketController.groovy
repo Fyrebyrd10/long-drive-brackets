@@ -1,3 +1,5 @@
+package ldb
+
 import grails.converters.JSON
 
 class BracketController {
@@ -5,9 +7,13 @@ class BracketController {
     def index() {
 
       def bracket = [:]
+        def player = Player.findAll()
+
+        def bracket1 = Bracket.get(1)
+
       def group1 = [
                       players:[
-                        [name:"Brendom", distance:400],
+                        [name:player[0].name, distance:player[0].id],
                         [name:"Christopher", distance:380],
                         [name:"Ryan", distance:410],
                         [name:"Robert", distance:360]
@@ -85,20 +91,22 @@ class BracketController {
       def set9 = [groups:[group8, group5, group6, group7]]
       def set10 = [groups:[group5, group6, group7, group8]]
 
-      def round1Players = []
-      round1Players.addAll(group1.players)
-      round1Players.addAll(group2.players)
-      round1Players.addAll(group3.players)
-      round1Players.addAll(group4.players)
-      round1Players.sort { it.distance }
-      round1Players.reverse(true)
+      def round1Players = bracket1.rounds[0].players
+      def round2Players = bracket1.rounds[1].players
+      def round3Players = bracket1.rounds[2].players
+//      round1Players.addAll(group1.players)
+//      round1Players.addAll(group2.players)
+//      round1Players.addAll(group3.players)
+//      round1Players.addAll(group4.players)
+//      round1Players.sort { it.distance }
+//      round1Players.reverse(true)
 
       def round1 = [sets:[set1,set2, set3, set4, set5], id:"round1", players: round1Players]
-      def round2 = [sets:[set6,set7, set8, set9, set10], id:"round2", players: round1Players]
-      def round3 = [sets:[set1,set2, set3, set4, set5], id:"round3", players: round1Players]
+      def round2 = [sets:[set6,set7, set8, set9, set10], id:"round2", players: round2Players]
+      def round3 = [sets:[set1,set2, set3, set4, set5], id:"round3", players: round3Players]
+        def finals = [final12:[group1,group2,group3]]
 
-
-      bracket = [rounds:[round1, round2, round3]]
+      bracket = [rounds:[round1, round2, round3], finals:finals]
 
       render bracket as JSON
 

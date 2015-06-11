@@ -1,6 +1,8 @@
 var React = require('react');
 var NavBar = require('./navbar.jsx');
 var Round = require('./round.jsx');
+var FinalsRound = require('./finalsRound.jsx');
+
 var BracketStore = require('../stores/bracket_store');
 var BracketActions = require('../actions/bracket_actions.js');
 
@@ -36,6 +38,7 @@ var Bracket = React.createClass({
         for(s in bracket.rounds) {
           rows.push(<Round round={bracket.rounds[s]} />);
         }
+          rows.push(<FinalsRound finals={bracket.finals}/>);
       }
         return (
             <div>
