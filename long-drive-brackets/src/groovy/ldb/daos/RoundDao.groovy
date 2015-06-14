@@ -2,7 +2,6 @@ package ldb.daos
 
 import groovy.sql.Sql
 import ldb.Round
-import ldb.Set
 
 class RoundDao {
     Sql sql

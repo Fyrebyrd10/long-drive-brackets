@@ -1,9 +1,6 @@
 package ldb.builder
 
 import groovy.sql.Sql
-import ldb.Bracket
-import ldb.Round
-
 
 class BracketBuilder {
 
@@ -22,7 +19,7 @@ class BracketBuilder {
                         sql.executeInsert("""
                               insert into records(id, bracket_id, round_id, set_id, group_id, player_id, distance, score)
                               values (?,?,?,?,?,?,?,?)
-                          """, [getNextId(), bracket_id, round_id, set_id, group_id, player_id, 0, 0])
+                          """, [getNextId(), bracket_id, round_id, set_id, group_id, 0, 0, 0])
 
                     }
                 }
