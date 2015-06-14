@@ -9,7 +9,7 @@ var Round = React.createClass({
         var roundId = null;
         var rows = [];
         if(round) {
-          roundId = round.id;
+          roundId = "round" +round.id;
           for(s in round.sets) {
             rows.push(<Set set={round.sets[s]} setNumber={parseInt(s) + 1}/>);
           }

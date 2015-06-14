@@ -2,12 +2,12 @@ var React = require('react');
 
 var GroupRow = React.createClass({
     render: function() {
-        var player = this.props.player;
+        var record = this.props.record;
         return (
             <tr>
-                <td className="groupNameWidth">{player.name}</td>
-                <td>{player.distance}</td>
-                <td>300</td>
+                <td className="groupNameWidth">{record.player.name}</td>
+                <td>{record.distance}</td>
+                <td>{record.score}</td>
             </tr>
         );
     }

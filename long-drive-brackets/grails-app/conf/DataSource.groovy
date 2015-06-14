@@ -1,11 +1,4 @@
-dataSource {
-    pooled = true
-    jmxExport = true
-    driverClassName = "org.h2.Driver"
-    username = "sa"
-    password = ""
-    dialect = "org.hibernate.dialect.H2Dialect"
-}
+
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = false
@@ -19,14 +12,22 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            pooled = true
+            dbCreate = "update"
+            url = "jdbc:mysql://localhost/ldb"
+            driverClassName = "com.mysql.jdbc.Driver"
+            username = "ldb_user"
+            password = "longball"
         }
     }
     test {
         dataSource {
+            pooled = true
             dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            url = "jdbc:mysql://localhost/ldb"
+            driverClassName = "com.mysql.jdbc.Driver"
+            username = "ldb_user"
+            password = "longball"
         }
     }
     production {

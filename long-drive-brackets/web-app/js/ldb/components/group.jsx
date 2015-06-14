@@ -6,8 +6,8 @@ var Group = React.createClass({
         var group = this.props.group;
         var rows = [];
         if(group) {
-          for(p in group.players) {
-            rows.push(<GroupRow player={group.players[p]}/>);
+          for(r in group.records) {
+            rows.push(<GroupRow record={group.records[r]}/>);
           }
         }
         return (

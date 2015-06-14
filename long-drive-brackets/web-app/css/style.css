@@ -28,7 +28,7 @@ table.bordered tr {
 
 @media only screen and (min-width : 993px) {
   .container {
-    width: 85%; } }
+    width: 100%; } }
 
 .groupNameWidth {
   width:100px;
