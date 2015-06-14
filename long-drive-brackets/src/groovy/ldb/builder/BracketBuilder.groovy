@@ -9,6 +9,7 @@ class BracketBuilder {
     void buildEmptyBraket() {
 
         def bracket_id = 2
+        def finals_id = 0
 //        def round_id = 1
 //        def set_id = 1
 //        def group_id=1
@@ -17,14 +18,15 @@ class BracketBuilder {
                 (1..4).each { group_id ->
                     (1..4).each { player_id ->
                         sql.executeInsert("""
-                              insert into records(id, bracket_id, round_id, set_id, group_id, player_id, distance, score)
-                              values (?,?,?,?,?,?,?,?)
-                          """, [getNextId(), bracket_id, round_id, set_id, group_id, 0, 0, 0])
+                              insert into records(id, bracket_id, finals_id, round_id, set_id, group_id, player_id, distance, score)
+                              values (?,?,?,?,?,?,?,?,?)
+                          """, [getNextId(), bracket_id, finals_id, round_id, set_id, group_id, 0, 0, 0])
 
                     }
                 }
             }
         }
+
 
     }
     def getNextId() {

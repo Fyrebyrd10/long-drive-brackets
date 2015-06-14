@@ -149,7 +149,7 @@ class BracketController {
 //
 //      bracket = [rounds:[round1, round2, round3], finals:finals]
 
-//        bracketBuilder.buildEmptyBraket()
+      //  bracketBuilder.buildEmptyBraket()
         bracket = bracketDao.getBracketById(2)
       render bracket as JSON
 
