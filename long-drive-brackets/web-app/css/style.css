@@ -9,6 +9,9 @@
 .icon-block {
   padding: 0 15px;
 }
+.white-text {
+  color:white;
+}
 td, th {
   padding: 3px 5px;
   display: table-cell;

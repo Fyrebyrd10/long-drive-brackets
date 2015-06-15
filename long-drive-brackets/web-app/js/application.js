@@ -13,9 +13,6 @@ var setInitialDisplays = function() {
   $("#finals").hide();
   $("#tab1").click();
   $("#tab1").click();
-
-
-console.log('just set displays');
 }
 var click = function(ids) {
   var recordsToUpdateList = [];

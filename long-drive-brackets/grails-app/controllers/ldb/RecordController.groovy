@@ -12,15 +12,10 @@ class RecordController {
       def jsonSlurper = new JsonSlurper()
 
       def body = jsonSlurper.parseText(request.reader.text)
-      body.each {
-        println it
+      body.records.each {
+        recordDao.updateRecord(new BigDecimal(it.recordId), new BigDecimal(it.playerId), new BigDecimal(it.distance),
+                                new BigDecimal(it.score))
       }
-      // def score = body.score
-      // def distance= body.distance
-      // def playerId = body.playerId
-      // recordDao.updateRecord(new BigDecimal(id), new BigDecimal(playerId), new BigDecimal(distance),
-      //                         new BigDecimal(score))
-
       render status:201
     }
 

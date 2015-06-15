@@ -371,10 +371,21 @@ var React = require('react');
 var AdminName = require('./adminName.jsx');
 
 var GroupRow = React.createClass({displayName: "GroupRow",
+    getInitialState: function() {
+      return {distance: this.props.record.distance, score: this.props.record.score};
+    },
+    handleDistanceChange: function(event) {
+      this.setState({distance: event.target.value});
+    },
+    handleScoreChange: function(event) {
+      this.setState({score: event.target.value});
+    },
     render: function() {
         var record = this.props.record;
         var players = this.props.players;
 
+        var distance = this.state.distance;
+        var score = this.state.score;
         var player = null;
         if(record) {
           player = record.player;
@@ -388,9 +399,13 @@ var GroupRow = React.createClass({displayName: "GroupRow",
           return (
               React.createElement("tr", null, 
                   React.createElement("td", {className: "groupNameWidth"}, React.createElement(AdminName, {nameId: nameId, player: player, players: players})), 
-                  React.createElement("td", {className: "adminScoreWidth"}, React.createElement("input", {id: distanceId, type: "text", value: record.distance})
-                    ), 
-                  React.createElement("td", {className: "adminScoreWidth"}, React.createElement("input", {id: scoreId, type: "text", value: record.score}))
+                  React.createElement("td", {className: "adminScoreWidth"}, 
+                    React.createElement("input", {id: distanceId, type: "text", value: distance, onChange: this.handleDistanceChange})
+                  ), 
+                  React.createElement("td", {className: "adminScoreWidth"}, 
+                    React.createElement("input", {id: scoreId, type: "text", value: score, onChange: this.handleScoreChange})
+
+                  )
               )
           );
         } else {
