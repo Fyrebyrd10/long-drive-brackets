@@ -11,9 +11,9 @@ class UrlMappings {
 				"/admin"(view:"/admin")
 
 
-				"/record/$id" {
+				"/record" {
 					controller = 'record'
-					action = [PUT: 'updateRecord']
+					action = [PUT: 'updateRecords']
 				}
         "500"(view:'/error')
 	}

@@ -1,10 +1,8 @@
 var React = require('react');
 var GroupRow = require('./groupRow.jsx');
+var AdminButton = require('./adminButton.jsx');
 
 var Group = React.createClass({
-    clickz: function() {
-      click(1);
-    },
     render: function() {
         var group = this.props.group;
         var players = this.props.players;
@@ -15,11 +13,11 @@ var Group = React.createClass({
         if(group) {
 
           for(r in group.records) {
-            recordIds << group.records[r].id;
+            recordIds.push(group.records[r].id);
             rows.push(<GroupRow record={group.records[r]} players={players}/>);
           }
           if(pathname.indexOf('admin') != -1) {
-            rows.push(<tr><td><a onClick={this.clickz} className="waves-effect waves-light btn">update</a></td><td></td><td></td></tr>);
+            rows.push(<AdminButton recordIds={recordIds}/>);
           }
 
         }

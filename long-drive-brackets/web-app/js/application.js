@@ -1,8 +1,6 @@
 jQuery(document).ready(function () {
 
 
-
-console.log($("#round1"));
 });
 
 var setInitialDisplays = function() {
@@ -20,6 +18,30 @@ var setInitialDisplays = function() {
 console.log('just set displays');
 }
 var click = function(ids) {
-  console.log("clicked!");
-  console.log(ids);
+  var recordsToUpdateList = [];
+  for(i in ids) {
+    var recordId = ids[i];
+    var distance = $("#distance".concat(recordId)).val();
+    var score = $("#score".concat(recordId)).val();
+    var playerId = $("#name".concat(recordId)).val();
+    var recordToUpdate = {'distance':distance,
+                          'score':score,
+                          'playerId':playerId,
+                          'recordId':recordId};
+    recordsToUpdateList.push(recordToUpdate);
+  }
+
+
+  $.ajax({
+    url: "record/",
+    type: 'PUT',
+    success: function() {
+      Materialize.toast('Bracket updated!', 2500);
+
+    },
+    contentType: "application/json",
+    data: JSON.stringify({records:recordsToUpdateList})
+  });
+
+
 }

@@ -13,11 +13,12 @@ var GroupRow = React.createClass({
         var pathname = window.location.pathname;
         var distanceId = "distance" + record.id;
         var scoreId = "score" + record.id;
+        var nameId = "name" + record.id;
 
         if(pathname.indexOf('admin') != -1) {
           return (
               <tr>
-                  <td className="groupNameWidth"><AdminName player={player} players={players}/></td>
+                  <td className="groupNameWidth"><AdminName nameId={nameId} player={player} players={players}/></td>
                   <td className="adminScoreWidth"><input id={distanceId} type="text" value={record.distance}></input>
                     </td>
                   <td className="adminScoreWidth"><input id={scoreId} type="text" value={record.score}></input></td>
