@@ -271,10 +271,15 @@ var GroupRow = require('./groupRow.jsx');
 var Group = React.createClass({displayName: "Group",
     render: function() {
         var group = this.props.group;
+        var pathname = window.location.pathname;
+
         var rows = [];
         if(group) {
           for(r in group.records) {
             rows.push(React.createElement(GroupRow, {record: group.records[r]}));
+          }
+          if(pathname.indexOf('admin') != -1) {
+            rows.push(React.createElement("tr", null, React.createElement("td", null, React.createElement("a", {className: "waves-effect waves-light btn"}, "update")), React.createElement("td", null), React.createElement("td", null)));
           }
         }
         return (
@@ -288,6 +293,7 @@ var Group = React.createClass({displayName: "Group",
             ), 
             rows
           )
+
         );
     }
 });
@@ -301,13 +307,27 @@ var React = require('react');
 var GroupRow = React.createClass({displayName: "GroupRow",
     render: function() {
         var record = this.props.record;
-        return (
-            React.createElement("tr", null, 
-                React.createElement("td", {className: "groupNameWidth"}, record.player.name), 
-                React.createElement("td", null, record.distance), 
-                React.createElement("td", null, record.score)
-            )
-        );
+        var pathname = window.location.pathname;
+        var distanceId = "distance" + record.id;
+        var scoreId = "score" + record.id;
+        if(pathname.indexOf('admin') != -1) {
+          return (
+              React.createElement("tr", null, 
+                  React.createElement("td", {className: "groupNameWidth"}, record.player.name), 
+                  React.createElement("td", {className: "adminScoreWidth"}, React.createElement("input", {id: distanceId, type: "text", value: record.distance})
+                    ), 
+                  React.createElement("td", {className: "adminScoreWidth"}, React.createElement("input", {id: scoreId, type: "text", value: record.score}))
+              )
+          );
+        } else {
+          return (
+              React.createElement("tr", null, 
+                  React.createElement("td", {className: "groupNameWidth"}, record.player.name), 
+                  React.createElement("td", null, record.distance), 
+                  React.createElement("td", null, record.score)
+              )
+          );
+        }
     }
 });
 
