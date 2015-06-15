@@ -10,6 +10,11 @@ class UrlMappings {
         "/"(view:"/index")
 				"/admin"(view:"/admin")
 
+
+				"/record/$id" {
+					controller = 'record'
+					action = [PUT: 'updateRecord']
+				}
         "500"(view:'/error')
 	}
 }

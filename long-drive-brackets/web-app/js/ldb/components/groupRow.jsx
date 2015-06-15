@@ -1,4 +1,5 @@
 var React = require('react');
+var AdminName = require('./adminName.jsx');
 
 var GroupRow = React.createClass({
     render: function() {
@@ -9,7 +10,7 @@ var GroupRow = React.createClass({
         if(pathname.indexOf('admin') != -1) {
           return (
               <tr>
-                  <td className="groupNameWidth">{record.player.name}</td>
+                  <td className="groupNameWidth"><AdminName/></td>
                   <td className="adminScoreWidth"><input id={distanceId} type="text" value={record.distance}></input>
                     </td>
                   <td className="adminScoreWidth"><input id={scoreId} type="text" value={record.score}></input></td>

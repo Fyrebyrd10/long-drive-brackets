@@ -12,9 +12,9 @@ class RecordDao {
         new Record(id:rowResult.id,  player: playerDao.getPlayerById(rowResult.player_id), distance:rowResult.distance, score:rowResult.score)
     }
 
-//    def insertRecord(BigDecimal playerId, BigDecimal distance, BigDecimal score) {
-//        sql.executeInsert("INSERT INTO records (player_id, distance, score, id) VALUES(?,?,?,?)", [playerId, distance, score,getNextId()])
-//    }
+   def updateRecord(BigDecimal id, BigDecimal playerId, BigDecimal distance, BigDecimal score) {
+        sql.executeUpdate("UPDATE records set player_id = ?, distance = ?, score = ? where id = ?", [playerId, distance, score, id])
+   }
 //
 //    def getNextId() {
 //        sql.firstRow("""
