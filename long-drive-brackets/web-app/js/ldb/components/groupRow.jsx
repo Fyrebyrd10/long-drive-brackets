@@ -4,13 +4,20 @@ var AdminName = require('./adminName.jsx');
 var GroupRow = React.createClass({
     render: function() {
         var record = this.props.record;
+        var players = this.props.players;
+
+        var player = null;
+        if(record) {
+          player = record.player;
+        }
         var pathname = window.location.pathname;
         var distanceId = "distance" + record.id;
         var scoreId = "score" + record.id;
+
         if(pathname.indexOf('admin') != -1) {
           return (
               <tr>
-                  <td className="groupNameWidth"><AdminName/></td>
+                  <td className="groupNameWidth"><AdminName player={player} players={players}/></td>
                   <td className="adminScoreWidth"><input id={distanceId} type="text" value={record.distance}></input>
                     </td>
                   <td className="adminScoreWidth"><input id={scoreId} type="text" value={record.score}></input></td>

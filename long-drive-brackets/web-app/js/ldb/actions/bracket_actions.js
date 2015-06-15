@@ -40,11 +40,14 @@ var BracketActions = {
 
                 Materialize.toast('Bracket Loaded!', 2500);
                 var bracket="";
-                var bracket = JSON.parse(res.text);
+                var body = JSON.parse(res.text);
+                bracket = body.bracket;
+                var players = body.players;
 
                 Dispatcher.dispatch({
                     action: Constants.LOAD_BRACKET_SUCCESS,
                     bracket: bracket,
+                    players:players
                 });
                 setInitialDisplays();
 

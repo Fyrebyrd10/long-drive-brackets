@@ -1,6 +1,7 @@
 jQuery(document).ready(function () {
 
 
+
 console.log($("#round1"));
 });
 
@@ -14,5 +15,11 @@ var setInitialDisplays = function() {
   $("#finals").hide();
   $("#tab1").click();
   $("#tab1").click();
+
+
 console.log('just set displays');
+}
+var click = function(ids) {
+  console.log("clicked!");
+  console.log(ids);
 }

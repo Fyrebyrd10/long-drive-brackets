@@ -9,7 +9,8 @@ var BracketActions = require('../actions/bracket_actions.js');
 
 var getStateFromStores = function() {
     return {
-        bracket: BracketStore.getBracket()
+        bracket: BracketStore.getBracket(),
+        players: BracketStore.getPlayers()
     }
 };
 
@@ -33,10 +34,11 @@ var Bracket = React.createClass({
 
     render: function() {
       var bracket = this.state.bracket;
+      var players = this.state.players;
       var rows = [];
       if(bracket) {
         for(s in bracket.rounds) {
-          rows.push(<Round round={bracket.rounds[s]} />);
+          rows.push(<Round round={bracket.rounds[s]} players={players}/>);
         }
           rows.push(<FinalsRound finals={bracket.finals}/>);
       }

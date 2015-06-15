@@ -6,10 +6,11 @@ var Set = React.createClass({
     render: function() {
         var set = this.props.set;
         var setNumber = this.props.setNumber;
+        var players = this.props.players;
         var rows = [];
         if(set) {
           for(g in set.groups) {
-            rows.push(<Group group={set.groups[g]}/>);
+            rows.push(<Group group={set.groups[g]} players={players}/>);
             rows.push(<br></br>);
           }
         }

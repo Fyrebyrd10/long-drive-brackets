@@ -151,7 +151,9 @@ class BracketController {
 
       //  bracketBuilder.buildEmptyBraket()
         bracket = bracketDao.getBracketById(2)
-      render bracket as JSON
+        def players = playerDao.getAllPlayers()
+        def map = [bracket:bracket, players:players]
+      render map as JSON
 
     }
 

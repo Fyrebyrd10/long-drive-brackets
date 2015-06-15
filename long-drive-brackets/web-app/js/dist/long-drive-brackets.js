@@ -41,11 +41,14 @@ var BracketActions = {
 
                 Materialize.toast('Bracket Loaded!', 2500);
                 var bracket="";
-                var bracket = JSON.parse(res.text);
+                var body = JSON.parse(res.text);
+                bracket = body.bracket;
+                var players = body.players;
 
                 Dispatcher.dispatch({
                     action: Constants.LOAD_BRACKET_SUCCESS,
                     bracket: bracket,
+                    players:players
                 });
                 setInitialDisplays();
 
@@ -73,12 +76,18 @@ var React = require('react');
 
 var AdminName = React.createClass({displayName: "AdminName",
     render: function() {
-
+          var players = this.props.players;
+          var player = this.props.player;
+          var rows = [];
+          if(players) {
+            for(p in players) {
+                rows.push(React.createElement("option", {value: players[p].id}, players[p].name));
+            }
+          }
           return (
               React.createElement("select", {class: "browser-default"}, 
-                React.createElement("option", {value: "", disabled: true, selected: true}, "Select Hitter"), 
-                React.createElement("option", {value: "1"}, "Option 1")
-
+                React.createElement("option", {value: player.id}, player.name), 
+                  rows
                 )
           );
 
@@ -101,7 +110,8 @@ var BracketActions = require('../actions/bracket_actions.js');
 
 var getStateFromStores = function() {
     return {
-        bracket: BracketStore.getBracket()
+        bracket: BracketStore.getBracket(),
+        players: BracketStore.getPlayers()
     }
 };
 
@@ -125,10 +135,11 @@ var Bracket = React.createClass({displayName: "Bracket",
 
     render: function() {
       var bracket = this.state.bracket;
+      var players = this.state.players;
       var rows = [];
       if(bracket) {
         for(s in bracket.rounds) {
-          rows.push(React.createElement(Round, {round: bracket.rounds[s]}));
+          rows.push(React.createElement(Round, {round: bracket.rounds[s], players: players}));
         }
           rows.push(React.createElement(FinalsRound, {finals: bracket.finals}));
       }
@@ -290,18 +301,26 @@ var React = require('react');
 var GroupRow = require('./groupRow.jsx');
 
 var Group = React.createClass({displayName: "Group",
+    clickz: function() {
+      click(1);
+    },
     render: function() {
         var group = this.props.group;
+        var players = this.props.players;
         var pathname = window.location.pathname;
 
         var rows = [];
+        var recordIds = [];
         if(group) {
+
           for(r in group.records) {
-            rows.push(React.createElement(GroupRow, {record: group.records[r]}));
+            recordIds << group.records[r].id;
+            rows.push(React.createElement(GroupRow, {record: group.records[r], players: players}));
           }
           if(pathname.indexOf('admin') != -1) {
-            rows.push(React.createElement("tr", null, React.createElement("td", null, React.createElement("a", {className: "waves-effect waves-light btn"}, "update")), React.createElement("td", null), React.createElement("td", null)));
+            rows.push(React.createElement("tr", null, React.createElement("td", null, React.createElement("a", {onClick: this.clickz, className: "waves-effect waves-light btn"}, "update")), React.createElement("td", null), React.createElement("td", null)));
           }
+
         }
         return (
           React.createElement("table", {className: "bordered"}, 
@@ -329,13 +348,20 @@ var AdminName = require('./adminName.jsx');
 var GroupRow = React.createClass({displayName: "GroupRow",
     render: function() {
         var record = this.props.record;
+        var players = this.props.players;
+
+        var player = null;
+        if(record) {
+          player = record.player;
+        }
         var pathname = window.location.pathname;
         var distanceId = "distance" + record.id;
         var scoreId = "score" + record.id;
+
         if(pathname.indexOf('admin') != -1) {
           return (
               React.createElement("tr", null, 
-                  React.createElement("td", {className: "groupNameWidth"}, React.createElement(AdminName, null)), 
+                  React.createElement("td", {className: "groupNameWidth"}, React.createElement(AdminName, {player: player, players: players})), 
                   React.createElement("td", {className: "adminScoreWidth"}, React.createElement("input", {id: distanceId, type: "text", value: record.distance})
                     ), 
                   React.createElement("td", {className: "adminScoreWidth"}, React.createElement("input", {id: scoreId, type: "text", value: record.score}))
@@ -383,12 +409,13 @@ var SetTotals = require('./setTotals.jsx');
 var Round = React.createClass({displayName: "Round",
     render: function() {
         var round = this.props.round;
+        var players = this.props.players;
         var roundId = null;
         var rows = [];
         if(round) {
           roundId = "round" +round.id;
           for(s in round.sets) {
-            rows.push(React.createElement(Set, {set: round.sets[s], setNumber: parseInt(s) + 1}));
+            rows.push(React.createElement(Set, {set: round.sets[s], setNumber: parseInt(s) + 1, players: players}));
           }
           rows.push(React.createElement(SetTotals, {players: round.players}))
         }
@@ -431,10 +458,11 @@ var Set = React.createClass({displayName: "Set",
     render: function() {
         var set = this.props.set;
         var setNumber = this.props.setNumber;
+        var players = this.props.players;
         var rows = [];
         if(set) {
           for(g in set.groups) {
-            rows.push(React.createElement(Group, {group: set.groups[g]}));
+            rows.push(React.createElement(Group, {group: set.groups[g], players: players}));
             rows.push(React.createElement("br", null));
           }
         }
@@ -534,12 +562,17 @@ var Store = require('./store');
 var _ = require('lodash');
 
 var _bracket = null;
+var _players = null;
 
 var _is_loading = false;
 var _error = null;
 
 var setBracket = function(bracket) {
   _bracket = bracket;
+};
+
+var setPlayers = function(players) {
+  _players = players;
 };
 
 var setError = function(error) {
@@ -553,12 +586,16 @@ var BracketStore = _.assign({}, Store, {
 
         // Get bracket object.
         return _bracket;
+    },
+    getPlayers: function() {
+        return _players;
     }
 });
 
 BracketStore.dispatchToken = Dispatcher.register(function(payload) {
     var action = payload.action;
     var bracket = payload.bracket;
+    var players= payload.players;
 
     var error = payload.error;
 
@@ -570,6 +607,7 @@ BracketStore.dispatchToken = Dispatcher.register(function(payload) {
         case Constants.LOAD_BRACKET_SUCCESS:
             _error = null;
             setBracket(bracket);
+            setPlayers(players);
             BracketStore.emitChange();
             break;
         case Constants.LOAD_BRACKET_FAILED:

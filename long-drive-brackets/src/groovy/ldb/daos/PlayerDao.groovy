@@ -10,5 +10,13 @@ class PlayerDao {
         new Player(sql.firstRow("select * from player where id = ?", [id]))
     }
 
+    List<Player> getAllPlayers() {
+      List<Player> players = []
+      sql.eachRow("select * from player") {
+        players << new Player(id:it.id, name:it.name)
+      }
+      players
+    }
+
 
 }
