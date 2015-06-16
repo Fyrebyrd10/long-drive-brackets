@@ -26,7 +26,60 @@ class BracketBuilder {
                 }
             }
         }
+        finals_id = 12
+        (1..3).each { group_id ->
+            (1..4).each { player_id ->
+                sql.executeInsert("""
+                      insert into records(id, bracket_id, finals_id, round_id, set_id, group_id, player_id, distance, score)
+                      values (?,?,?,?,?,?,?,?,?)
+                  """, [getNextId(), bracket_id, finals_id, 0, 0, group_id, 0, 0, 0])
 
+                }
+              }
+              finals_id = 8
+              (1..4).each { group_id ->
+                  (1..2).each { player_id ->
+                      sql.executeInsert("""
+                            insert into records(id, bracket_id, finals_id, round_id, set_id, group_id, player_id, distance, score)
+                            values (?,?,?,?,?,?,?,?,?)
+                        """, [getNextId(), bracket_id, finals_id, 0, 0, group_id, 0, 0, 0])
+
+                      }
+                    }
+
+
+    finals_id = 4
+    (1..2).each { group_id ->
+        (1..2).each { player_id ->
+            sql.executeInsert("""
+                  insert into records(id, bracket_id, finals_id, round_id, set_id, group_id, player_id, distance, score)
+                  values (?,?,?,?,?,?,?,?,?)
+              """, [getNextId(), bracket_id, finals_id, 0, 0, group_id, 0, 0, 0])
+
+            }
+          }
+
+    finals_id = 2
+    (1..1).each { group_id ->
+        (1..2).each { player_id ->
+            sql.executeInsert("""
+                  insert into records(id, bracket_id, finals_id, round_id, set_id, group_id, player_id, distance, score)
+                  values (?,?,?,?,?,?,?,?,?)
+              """, [getNextId(), bracket_id, finals_id, 0, 0, group_id, 0, 0, 0])
+
+            }
+          }
+
+    finals_id = 1
+    (1..1).each { group_id ->
+        (1..1).each { player_id ->
+            sql.executeInsert("""
+                  insert into records(id, bracket_id, finals_id, round_id, set_id, group_id, player_id, distance, score)
+                  values (?,?,?,?,?,?,?,?,?)
+              """, [getNextId(), bracket_id, finals_id, 0, 0, group_id, 0, 0, 0])
+
+            }
+          }
 
     }
     def getNextId() {

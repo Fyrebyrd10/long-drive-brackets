@@ -2,8 +2,10 @@ package ldb
 
 class Finals {
     BigDecimal id
-    List<Round> final12 = []
-    List<Round> final8 = []
-    List<Round> final4 = []
-    List<Round> final2 = []
+    List<Group> final12 = []
+    List<Group> final8 = []
+    List<Group> final4 = []
+    List<Group> final2 = []
+    Group champion = []
+
 }

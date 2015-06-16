@@ -7,7 +7,12 @@ class RecordDao {
     Sql sql
     PlayerDao playerDao
 
-    Record getRecordById(BigDecimal id, BigDecimal groupId, BigDecimal setId, BigDecimal roundId, BigDecimal bracketId) {
+    Record getRecordById(BigDecimal id) {
+        def rowResult = sql.firstRow("select * from records where id = ?", [id])
+        new Record(id:rowResult.id,  player: playerDao.getPlayerById(rowResult.player_id), distance:rowResult.distance, score:rowResult.score)
+    }
+
+    Record getFinalsRecordById(BigDecimal id) {
         def rowResult = sql.firstRow("select * from records where id = ?", [id])
         new Record(id:rowResult.id,  player: playerDao.getPlayerById(rowResult.player_id), distance:rowResult.distance, score:rowResult.score)
     }
