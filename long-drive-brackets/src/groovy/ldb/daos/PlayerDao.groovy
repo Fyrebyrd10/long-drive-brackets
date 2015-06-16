@@ -18,5 +18,9 @@ class PlayerDao {
       players
     }
 
+    def getPlayersTotalByRound(playerId, roundId) {
+      sql.firstRow("select SUM(score) as total from records where round_id=? and player_id=?",[roundId, playerId]).total
+    }
+
 
 }

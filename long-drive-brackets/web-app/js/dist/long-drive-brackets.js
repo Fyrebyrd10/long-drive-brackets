@@ -566,7 +566,7 @@ var TotalsRow = React.createClass({displayName: "TotalsRow",
         return (
             React.createElement("tr", null, 
                 React.createElement("td", {className: "groupNameWidth"}, player.name), 
-                React.createElement("td", null, player.distance)
+                React.createElement("td", null, player.totalScore)
             )
         );
     }

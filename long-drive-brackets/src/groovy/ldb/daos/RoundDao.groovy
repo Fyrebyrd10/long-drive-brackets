@@ -21,9 +21,13 @@ class RoundDao {
       def players = []
       sql.eachRow("select distinct(player_id) from records where round_id = ?", [id]) {
         if(it.player_id != 0) {
-          players << playerDao.getPlayerById(it.player_id)
+          def player = playerDao.getPlayerById(it.player_id)
+          def total = playerDao.getPlayersTotalByRound(it.player_id, id)
+          players << [name:player.name, totalScore:total]
         }
       }
+      players.sort { it.totalScore }
+      players.reverse(true)
       players
     }
 

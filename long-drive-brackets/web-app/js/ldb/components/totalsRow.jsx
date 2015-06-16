@@ -6,7 +6,7 @@ var TotalsRow = React.createClass({
         return (
             <tr>
                 <td className="groupNameWidth">{player.name}</td>
-                <td>{player.distance}</td>
+                <td>{player.totalScore}</td>
             </tr>
         );
     }
