@@ -54,7 +54,7 @@ BracketStore.dispatchToken = Dispatcher.register(function(payload) {
             BracketStore.emitChange();
             break;
         case Constants.LOAD_BRACKET_FAILED:
-            this.setError(error);
+            setError(error);
             BracketStore.emitChange();
             break;
     }

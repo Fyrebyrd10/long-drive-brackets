@@ -80,13 +80,20 @@ var AdminButton = React.createClass({displayName: "AdminButton",
     },
     render: function() {
         var recordIds = this.props.recordIds;
+        var isFinals = this.props.isFinals;
+        var pathname = window.location.pathname;
+        var rows = [];
+        if(isFinals != "true") {
+          rows.push(React.createElement("td", null));
+        }
+
         return (
           React.createElement("tr", null, 
             React.createElement("td", null, 
               React.createElement("a", {onClick: this.clickz, className: "waves-effect waves-light btn"}, "update")
             ), 
             React.createElement("td", null), 
-            React.createElement("td", null)
+            rows
 
           )
 
@@ -168,7 +175,7 @@ var Bracket = React.createClass({displayName: "Bracket",
         for(s in bracket.rounds) {
           rows.push(React.createElement(Round, {round: bracket.rounds[s], players: players}));
         }
-          rows.push(React.createElement(FinalsRound, {finals: bracket.finals}));
+          rows.push(React.createElement(FinalsRound, {finals: bracket.finals, players: players}));
       }
         return (
             React.createElement("div", null, 
@@ -212,18 +219,33 @@ module.exports = Column;
 },{"react":173}],7:[function(require,module,exports){
 var React = require('react');
 var FinalsGroupRow = require('./finalsGroupRow.jsx');
+var AdminButton = require('./adminButton.jsx');
 
 var FinalsGroup = React.createClass({displayName: "FinalsGroup",
     render: function() {
         var group = this.props.group;
+        var players = this.props.players;
+        var pathname = window.location.pathname;
+        var recordIds = [];
+
         var rows = [];
         if(group) {
-          for(p in group.players) {
-            rows.push(React.createElement(FinalsGroupRow, {player: group.players[p]}));
+          for(p in group.records) {
+            recordIds.push(group.records[p].id);
+            rows.push(React.createElement(FinalsGroupRow, {record: group.records[p], players: players}));
+          }
+          if(pathname.indexOf('admin') != -1) {
+            rows.push(React.createElement(AdminButton, {isFinals: "true", recordIds: recordIds}));
           }
         }
         return (
           React.createElement("table", {className: "bordered"}, 
+            React.createElement("thead", null, 
+              React.createElement("tr", null, 
+                React.createElement("th", null, "Player"), 
+                React.createElement("th", null, "Distance")
+              )
+            ), 
             rows
           )
         );
@@ -233,25 +255,54 @@ var FinalsGroup = React.createClass({displayName: "FinalsGroup",
 module.exports = FinalsGroup;
 
 
-},{"./finalsGroupRow.jsx":8,"react":173}],8:[function(require,module,exports){
+},{"./adminButton.jsx":3,"./finalsGroupRow.jsx":8,"react":173}],8:[function(require,module,exports){
 var React = require('react');
+var AdminName = require('./adminName.jsx');
 
 var FinalsGroupRow = React.createClass({displayName: "FinalsGroupRow",
+  getInitialState: function() {
+    return {distance: this.props.record.distance};
+  },
+  handleDistanceChange: function(event) {
+    this.setState({distance: event.target.value});
+  },
     render: function() {
-        var player = this.props.player;
+        var record = this.props.record;
+        var players = this.props.players;
+        var distance = this.state.distance;
+
+
+        var pathname = window.location.pathname;
+        var player = null;
+        if(record) {
+          player = record.player;
+        }
+        var distanceId = "distance" + record.id;
+        var nameId = "name" + record.id;
+        if(pathname.indexOf('admin') != -1) {
+          return (
+              React.createElement("tr", null, 
+                  React.createElement("td", {className: "groupNameWidth"}, React.createElement(AdminName, {nameId: nameId, player: player, players: players})), 
+                  React.createElement("td", {className: "adminScoreWidth"}, 
+                    React.createElement("input", {id: distanceId, type: "text", value: distance, onChange: this.handleDistanceChange})
+                  )
+              )
+          );
+        } else {
         return (
             React.createElement("tr", null, 
-                React.createElement("td", {className: "groupNameWidth"}, player.name), 
-                React.createElement("td", null, player.distance)
+                React.createElement("td", {className: "groupNameWidth"}, record.player.name), 
+                React.createElement("td", null, record.distance)
             )
         );
+      }
     }
 });
 
 module.exports = FinalsGroupRow;
 
 
-},{"react":173}],9:[function(require,module,exports){
+},{"./adminName.jsx":4,"react":173}],9:[function(require,module,exports){
 var React = require('react');
 var Row = require('./row.jsx');
 var Column = require('./column.jsx');
@@ -261,28 +312,32 @@ var FinalsGroup = require('./finalsGroup.jsx');
 var FinalsRound = React.createClass({displayName: "FinalsRound",
     render: function() {
         var finals = this.props.finals;
+        var players = this.props.players;
         var final12Rows = [];
         var final8Rows = [];
         var final4Rows = [];
         var final2Rows = [];
+        var champion = [];
         if(finals) {
 
             for(g in finals.final12) {
-                final12Rows.push(React.createElement(FinalsGroup, {group: finals.final12[g]}));
+                final12Rows.push(React.createElement(FinalsGroup, {group: finals.final12[g], players: players}));
                 final12Rows.push(React.createElement("br", null));
             }
             for(g in finals.final8) {
-                final8Rows.push(React.createElement(FinalsGroup, {group: finals.final8[g]}));
+                final8Rows.push(React.createElement(FinalsGroup, {group: finals.final8[g], players: players}));
                 final8Rows.push(React.createElement("br", null));
             }
             for(g in finals.final4) {
-                final4Rows.push(React.createElement(FinalsGroup, {group: finals.final4[g]}));
+                final4Rows.push(React.createElement(FinalsGroup, {group: finals.final4[g], players: players}));
                 final4Rows.push(React.createElement("br", null));
             }
             for(g in finals.final2) {
-                final2Rows.push(React.createElement(FinalsGroup, {group: finals.final2[g]}));
+                final2Rows.push(React.createElement(FinalsGroup, {group: finals.final2[g], players: players}));
                 final2Rows.push(React.createElement("br", null));
             }
+            champion.push(React.createElement(FinalsGroup, {group: finals.champion, players: players}));
+
         }
         return (
 
@@ -311,6 +366,12 @@ var FinalsRound = React.createClass({displayName: "FinalsRound",
                             React.createElement("h4", null, "Final 2")
                         ), 
                         final2Rows
+                    ), 
+                    React.createElement(Column, null, 
+                        React.createElement("div", {className: "center"}, 
+                            React.createElement("h4", null, "Champion")
+                        ), 
+                        champion
                     )
                 )
 
@@ -652,7 +713,7 @@ BracketStore.dispatchToken = Dispatcher.register(function(payload) {
             BracketStore.emitChange();
             break;
         case Constants.LOAD_BRACKET_FAILED:
-            this.setError(error);
+            setError(error);
             BracketStore.emitChange();
             break;
     }

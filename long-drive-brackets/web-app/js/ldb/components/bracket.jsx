@@ -40,7 +40,7 @@ var Bracket = React.createClass({
         for(s in bracket.rounds) {
           rows.push(<Round round={bracket.rounds[s]} players={players}/>);
         }
-          rows.push(<FinalsRound finals={bracket.finals}/>);
+          rows.push(<FinalsRound finals={bracket.finals} players={players}/>);
       }
         return (
             <div>
