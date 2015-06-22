@@ -45,6 +45,7 @@ var Bracket = React.createClass({
         return (
             <div>
                 <NavBar/>
+                <h5 className="center-align">Bluff City Shootout 2015</h5>
                   <ul className="tabs">
                     <li className="tab col s3"><a id="tab1" className="active" href="#round1">Round 1</a></li>
                     <li className="tab col s3"><a href="#round2">Round 2</a></li>
