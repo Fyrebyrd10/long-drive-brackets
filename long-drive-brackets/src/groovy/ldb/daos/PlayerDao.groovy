@@ -15,6 +15,7 @@ class PlayerDao {
       sql.eachRow("select * from player") {
         players << new Player(id:it.id, name:it.name)
       }
+      players.sort { it.name }
       players
     }
 
