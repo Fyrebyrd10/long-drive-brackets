@@ -80,6 +80,7 @@ class BracketBuilder {
 
             }
           }
+        sql.executeInsert("insert into messages (bracket_id, message) values (2,null)")
 
     }
     def getNextId() {

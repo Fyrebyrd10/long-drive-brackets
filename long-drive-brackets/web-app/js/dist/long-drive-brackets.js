@@ -44,11 +44,13 @@ var BracketActions = {
                 var body = JSON.parse(res.text);
                 bracket = body.bracket;
                 var players = body.players;
+                var message = body.message;
 
                 Dispatcher.dispatch({
                     action: Constants.LOAD_BRACKET_SUCCESS,
                     bracket: bracket,
-                    players:players
+                    players:players,
+                    message:message
                 });
                 setInitialDisplays();
 
@@ -137,7 +139,7 @@ var React = require('react');
 var NavBar = require('./navbar.jsx');
 var Round = require('./round.jsx');
 var FinalsRound = require('./finalsRound.jsx');
-
+var AdminButton = require('./adminButton.jsx');
 var BracketStore = require('../stores/bracket_store');
 var BracketActions = require('../actions/bracket_actions.js');
 
@@ -145,7 +147,8 @@ var BracketActions = require('../actions/bracket_actions.js');
 var getStateFromStores = function() {
     return {
         bracket: BracketStore.getBracket(),
-        players: BracketStore.getPlayers()
+        players: BracketStore.getPlayers(),
+        message: BracketStore.getMessage()
     }
 };
 
@@ -170,6 +173,8 @@ var Bracket = React.createClass({displayName: "Bracket",
     render: function() {
       var bracket = this.state.bracket;
       var players = this.state.players;
+      var message = this.state.message;
+
       var rows = [];
       if(bracket) {
         for(s in bracket.rounds) {
@@ -200,7 +205,7 @@ var Bracket = React.createClass({displayName: "Bracket",
 module.exports = Bracket;
 
 
-},{"../actions/bracket_actions.js":1,"../stores/bracket_store":20,"./finalsRound.jsx":9,"./navbar.jsx":12,"./round.jsx":13,"react":173}],6:[function(require,module,exports){
+},{"../actions/bracket_actions.js":1,"../stores/bracket_store":20,"./adminButton.jsx":3,"./finalsRound.jsx":9,"./navbar.jsx":12,"./round.jsx":13,"react":173}],6:[function(require,module,exports){
 var React = require('react');
 
 var Column = React.createClass({displayName: "Column",
@@ -660,12 +665,12 @@ module.exports = new Dispatcher();
 },{"flux":24}],20:[function(require,module,exports){
 var Dispatcher = require('../dispatcher/dispatcher');
 var Constants = require('../constants');
-var SubscriberActions = require('../actions/bracket_actions.js');
 var Store = require('./store');
 var _ = require('lodash');
 
 var _bracket = null;
 var _players = null;
+var _message = null;
 
 var _is_loading = false;
 var _error = null;
@@ -676,6 +681,10 @@ var setBracket = function(bracket) {
 
 var setPlayers = function(players) {
   _players = players;
+};
+
+var setMessage = function(message) {
+    _message = message;
 };
 
 var setError = function(error) {
@@ -692,6 +701,9 @@ var BracketStore = _.assign({}, Store, {
     },
     getPlayers: function() {
         return _players;
+    },
+    getMessage: function() {
+        return _message;
     }
 });
 
@@ -699,6 +711,7 @@ BracketStore.dispatchToken = Dispatcher.register(function(payload) {
     var action = payload.action;
     var bracket = payload.bracket;
     var players= payload.players;
+    var message = payload.message;
 
     var error = payload.error;
 
@@ -711,6 +724,7 @@ BracketStore.dispatchToken = Dispatcher.register(function(payload) {
             _error = null;
             setBracket(bracket);
             setPlayers(players);
+            setMessage(message);
             BracketStore.emitChange();
             break;
         case Constants.LOAD_BRACKET_FAILED:
@@ -723,7 +737,7 @@ BracketStore.dispatchToken = Dispatcher.register(function(payload) {
 module.exports = BracketStore;
 
 
-},{"../actions/bracket_actions.js":1,"../constants":18,"../dispatcher/dispatcher":19,"./store":21,"lodash":27}],21:[function(require,module,exports){
+},{"../constants":18,"../dispatcher/dispatcher":19,"./store":21,"lodash":27}],21:[function(require,module,exports){
 var Constants = require('../constants');
 var EventEmitter = require('events');
 var _ = require('lodash');

@@ -2,7 +2,7 @@ var React = require('react');
 var NavBar = require('./navbar.jsx');
 var Round = require('./round.jsx');
 var FinalsRound = require('./finalsRound.jsx');
-
+var AdminButton = require('./adminButton.jsx');
 var BracketStore = require('../stores/bracket_store');
 var BracketActions = require('../actions/bracket_actions.js');
 
@@ -10,7 +10,8 @@ var BracketActions = require('../actions/bracket_actions.js');
 var getStateFromStores = function() {
     return {
         bracket: BracketStore.getBracket(),
-        players: BracketStore.getPlayers()
+        players: BracketStore.getPlayers(),
+        message: BracketStore.getMessage()
     }
 };
 
@@ -35,6 +36,8 @@ var Bracket = React.createClass({
     render: function() {
       var bracket = this.state.bracket;
       var players = this.state.players;
+      var message = this.state.message;
+
       var rows = [];
       if(bracket) {
         for(s in bracket.rounds) {

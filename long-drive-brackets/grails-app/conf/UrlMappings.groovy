@@ -15,6 +15,10 @@ class UrlMappings {
 					controller = 'record'
 					action = [PUT: 'updateRecords']
 				}
+				"/message" {
+					controller = 'record'
+					action = [PUT: 'updateMessage']
+				}
         "500"(view:'/error')
 	}
 }

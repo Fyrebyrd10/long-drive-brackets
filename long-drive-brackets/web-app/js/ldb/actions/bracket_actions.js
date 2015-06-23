@@ -43,11 +43,13 @@ var BracketActions = {
                 var body = JSON.parse(res.text);
                 bracket = body.bracket;
                 var players = body.players;
+                var message = body.message;
 
                 Dispatcher.dispatch({
                     action: Constants.LOAD_BRACKET_SUCCESS,
                     bracket: bracket,
-                    players:players
+                    players:players,
+                    message:message
                 });
                 setInitialDisplays();
 

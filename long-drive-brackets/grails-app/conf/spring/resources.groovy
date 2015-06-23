@@ -3,6 +3,7 @@ import ldb.builder.BracketBuilder
 import ldb.daos.BracketDao
 import ldb.daos.FinalsDao
 import ldb.daos.GroupDao
+import ldb.daos.MessageDao
 import ldb.daos.PlayerDao
 import ldb.daos.RecordDao
 import ldb.daos.RoundDao
@@ -19,5 +20,6 @@ beans = {
     groupDao(GroupDao) { bean -> bean.autowire = 'byName' }
     recordDao(RecordDao) { bean -> bean.autowire = 'byName' }
     playerDao(PlayerDao) { bean -> bean.autowire = 'byName' }
+    messageDao(MessageDao) { bean -> bean.autowire = 'byName' }
     bracketBuilder(BracketBuilder) { bean -> bean.autowire = 'byName' }
 }
